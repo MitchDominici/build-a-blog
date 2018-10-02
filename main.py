@@ -32,10 +32,9 @@ def add_blog():
 
         title = request.form['title']
         body = request.form['body']
-        new_body=Blog(body)
-        new_title = Blog(title)
-        db.session.add(new_title)
-        db.session.add(new_body)
+        new_blog = Blog(title,body)
+        
+        db.session.add(new_blog)
         db.session.commit()
 
     return render_template('newpost.html')
