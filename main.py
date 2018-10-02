@@ -14,28 +14,29 @@ class Blog(db.Model):
     title = db.Column(db.String(120))
     body = db.Column(db.String(500))
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, title,body):
+        self.title = title
+        self.body = body
         
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/',methods = ['POST', 'GET'])
 def blog():
-
-    if request.method == 'POST':
-        blog_name = request.form['blog']
-        new_blog = Task(blog_name)
-        db.session.add(new_blog)
-        db.session.commit()
 
     blogs = Blog.query.all()
     return render_template('blog.html',title="Build a Blog!", 
-        blog=blog)
+        blogs=blogs)
 
-
-@app.route('/add-blog',methods =['POST'] )
+@app.route('/newpost')
 def add_blog():
 
-    
-    
+    if request.method == 'POST':
+
+        title = request.form['title']
+        body = request.form['body']
+        new_body=Blog(body)
+        new_title = Blog(title)
+        db.session.add(new_title)
+        db.session.add(new_body)
+        db.session.commit()
 
     return render_template('newpost.html')
 

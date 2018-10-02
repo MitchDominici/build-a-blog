@@ -2,16 +2,24 @@
 
 {% block content %}
 <h1>Add a Blog Post</h1>
-<form action = '/add-blog' method ='POST'>
+<form  action ="/" method ='POST'>
     <label>
         Blog Title:
-        <input type = "text" name = "add-title">
-        <input type ="textarea" name = "add-body">
-        <input type = "submit" value = "Add Entry">
-        
+        <input type = "text" name = "title" autofocus/>
     </label>
 
+        <br>
+
+    <label>
+        Blog Body:
+        <input type ="text" name = "body" size = "50"/>
+    </label>
+
+        <br>
+
+        <input type = "submit" value = "Add Entry"/>
 </form>
+
 
 
 
