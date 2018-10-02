@@ -25,7 +25,7 @@ def blog():
     return render_template('blog.html',title="Build a Blog!", 
         blogs=blogs)
 
-@app.route('/newpost')
+@app.route('/newpost',methods = ['POST', 'GET'])
 def add_blog():
 
     if request.method == 'POST':
@@ -36,8 +36,11 @@ def add_blog():
         
         db.session.add(new_blog)
         db.session.commit()
+        
+        return redirect('/')
 
-    return render_template('newpost.html')
+    else:
+        return render_template('newpost.html')
 
 
 if __name__ == '__main__':
