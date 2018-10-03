@@ -22,13 +22,18 @@ class Blog(db.Model):
         
 @app.route('/',methods = ['POST', 'GET'])
 def blog():
-    single_blog= request.args.get('single_blog.html')
+
     blogs = Blog.query.all()
+    single= request.args.get('blog.id')
+    
+
     if request.method == 'request.args':
-        return render_template('single_blog.html'.format(single.blog))
+        return render_template('single_blog.html',blog_id=blog_id)
+
     else:
-        return render_template('blog.html'.format(single_blog),title="Build a Blog!", 
-        blogs=blogs)
+        return render_template('blog.html', 
+        title="Build a Blog!", blogs=blogs, single=single )
+
     
  
 
