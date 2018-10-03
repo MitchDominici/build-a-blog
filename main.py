@@ -1,5 +1,7 @@
 from flask import Flask, request, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
+import cgi
+import os
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -20,10 +22,16 @@ class Blog(db.Model):
         
 @app.route('/',methods = ['POST', 'GET'])
 def blog():
-
+    single_blog= request.args.get('single_blog.html')
     blogs = Blog.query.all()
-    return render_template('blog.html',title="Build a Blog!", 
+    if request.method == 'request.args':
+        return render_template('single_blog.html'.format(single.blog))
+    else:
+        return render_template('blog.html'.format(single_blog),title="Build a Blog!", 
         blogs=blogs)
+    
+ 
+
 
 @app.route('/newpost',methods = ['POST', 'GET'])
 def add_blog():
