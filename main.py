@@ -1,15 +1,11 @@
 from flask import Flask, request, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
-import cgi
-import os
-
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:0812@localhost:8889/build-a-blog'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
-
 
 class Blog(db.Model):
 
@@ -27,23 +23,16 @@ def home_page():
     blogs = Blog.query.all()
     blog_id= request.args.get('id')
     
-    
-
     if blog_id == None:
         return render_template('blog.html', 
         title="Build a Blog!", blogs=blogs )
         
-
-    else:
-        blog_title = request.args.get('id')
-        title = Blog.query.get(blog_title)
-    
+    else: 
+        titles=int(request.args.get('id'))
+        blog = Blog.query.get(titles)
+        
         return render_template('single_blog.html'
-        ,title=title)
-
-    
- 
-
+        ,blog=blog)
 
 @app.route('/newpost',methods = ['POST', 'GET'])
 def add_blog():
@@ -61,7 +50,6 @@ def add_blog():
 
     else:
         return render_template('newpost.html')
-
 
 if __name__ == '__main__':
     app.run()
