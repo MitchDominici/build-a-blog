@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import cgi
 import os
 
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:0812@localhost:8889/build-a-blog'
@@ -21,18 +22,24 @@ class Blog(db.Model):
         self.body = body
         
 @app.route('/',methods = ['POST', 'GET'])
-def blog():
+def home_page():
 
     blogs = Blog.query.all()
-    single= request.args.get('blog.id')
+    blog_id= request.args.get('id')
+    
     
 
-    if request.method == 'request.args':
-        return render_template('single_blog.html',blog_id=blog_id)
+    if blog_id == None:
+        return render_template('blog.html', 
+        title="Build a Blog!", blogs=blogs )
+        
 
     else:
-        return render_template('blog.html', 
-        title="Build a Blog!", blogs=blogs, single=single )
+        blog_title = request.args.get('id')
+        title = Blog.query.get(blog_title)
+    
+        return render_template('single_blog.html'
+        ,title=title)
 
     
  
