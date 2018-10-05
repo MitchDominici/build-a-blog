@@ -27,11 +27,9 @@ def home_page():
         return render_template('blog.html', 
         title="Build a Blog!", blogs=blogs )
         
-    else: 
-        titles=int(request.args.get('id'))
-        blog = Blog.query.get(titles)
+    blog = Blog.query.get(blog_id)
         
-        return render_template('single_blog.html'
+    return render_template('single_blog.html'
         ,blog=blog)
 
 @app.route('/newpost',methods = ['POST', 'GET'])
@@ -46,7 +44,10 @@ def add_blog():
         db.session.add(new_blog)
         db.session.commit()
         
-        return redirect('/')
+        blog_id= request.args.get('id')
+        blog=Blog.query.get(blog_id)
+        
+        return redirect('/?id={}'.format(blog))
 
     else:
         return render_template('newpost.html')
