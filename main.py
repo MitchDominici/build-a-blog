@@ -44,11 +44,10 @@ def add_blog():
         db.session.add(new_blog)
         db.session.commit()
         
-        new_page = Blog.query.order_by('-Blog.id').first()
+        blog = Blog.query.order_by('-Blog.id').first()
         
-        
-        
-        return redirect('/?id={}'.format(blog))
+
+        return render_template('single_blog.html',blog=blog)
 
     else:
         return render_template('newpost.html',title="Add a Blog Post")
