@@ -9,7 +9,7 @@ db = SQLAlchemy(app)
 
 class Blog(db.Model):
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     title = db.Column(db.String(120))
     body = db.Column(db.String(500))
 
@@ -44,13 +44,14 @@ def add_blog():
         db.session.add(new_blog)
         db.session.commit()
         
-        blog_id= request.args.get('id')
-        blog=Blog.query.get(blog_id)
+        new_page = Blog.query.order_by('-Blog.id').first()
+        
+        
         
         return redirect('/?id={}'.format(blog))
 
     else:
-        return render_template('newpost.html')
+        return render_template('newpost.html',title="Add a Blog Post")
 
 if __name__ == '__main__':
     app.run()
